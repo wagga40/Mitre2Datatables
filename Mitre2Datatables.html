@@ -1,0 +1,75 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mitre Att&#38;ck (c) Datatables</title>
+    <meta name="description" content="Mitre Att&#38;ck (c) Datatables">
+    <meta name="author" content="wagga">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+</head>
+
+<body>
+    <table id="matrix-table" class="display" width="100%"></table>
+    <!-- JQuery & DataTables libs -->
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <!-- Custon JS that contains the output of Mitre2Datatables.py -->
+    <script type="text/javascript" src="Mitre2Datatables.js"></script>
+    <!-- Custon JS that contains the output of Mitre2Datatables.py -->
+    <script type="text/javascript">
+
+        // Tags in cells we want to customize
+        var tags = ["T1589", "T1028", "T1004", "T1013", "T1015", "T1009"];
+
+        $(document).ready(function() {
+
+            // Add your own logic to customize cells
+            for (let i = 0; i < dataJSON.length; i++) { 
+                for (let j = 0; j < dataJSON[i].length; j++) { 
+                    technique = dataJSON[i][j].split("-")[0];
+                    if (tags.includes(technique)){
+                        dataJSON[i][j] = dataJSON[i][j] + " <br><br> <b> Your HTML here. <br> This cell can be clicked. </b>";
+                    }
+                }
+            }
+
+            // initialize the datatables
+            var matrix = $('#matrix-table').DataTable( {
+                paging: false, // Remove paging 
+                ordering: false, // Prevent ordering of the cells 
+                data: dataJSON, // Loaded from Mitre-datatables.js file
+                columns: [
+                    { title: "Reconnaissance"}, 
+                    { title: "Resource Development"},
+                    { title: "Initial Access"},
+                    { title: "Execution"},
+                    { title: "Persistence"},
+                    { title: "Privilege escalation"},
+                    { title: "Defense Evasion"}, 
+                    { title: "Credential Access"},
+                    { title: "Discovery"},
+                    { title: "Lateral Movement"},
+                    { title: "Collection"},
+                    { title: "Command And Control"}, 
+                    { title: "Exfiltration"},
+                    { title: "Impact"}
+                ]
+            });
+
+            // Add action on the cells
+            $('#matrix-table tbody').on( 'click', 'td', function () {
+                // Get clicked technique
+                var rules = [];
+                var technique = matrix.cell( this ).data().split("-")[0];
+                // We limit to tagged cells only
+                if (tags.includes(technique)){
+                    alert("You've have clicked : " + technique);
+                } 
+           });
+        });
+    </script>
+</body>
+</html>
