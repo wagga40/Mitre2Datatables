@@ -1,10 +1,10 @@
 # Mitre2Datatables
 
-**Since the Mitre Att&ck matrix is not very convenient to embed in your own web project, I chose to build my own matrix based on [Datatables](https://datatables.net).**
+**Since the [Mitre Att&ck (c)](https://attack.mitre.org) matrix is not very convenient to embed in your own web project, I chose to build my own matrix based on [Datatables](https://datatables.net).**
 
-**Mitre2Datatables** allows you to add search, sort, filter and add custom graphics to your Mitre Att&ck (c) matrix without complicated things like Node 😁
+**Mitre2Datatables** allows you to add search, sort, filter and add custom graphics to your [Mitre Att&ck (c)](https://attack.mitre.org) matrix without complicated things like Node 😁
 
-The project only uses technique ID and technique names but it should be possible to have much more.
+This project only uses technique ID and technique names but it should be possible to have much more.
 
 ## Example
 
