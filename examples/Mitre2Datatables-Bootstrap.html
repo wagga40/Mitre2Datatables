@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mitre Att&#38;ck (c) Datatables</title>
+    <meta name="description" content="Mitre Att&#38;ck (c) Datatables">
+    <meta name="author" content="wagga">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/sl-1.4.0/cr-1.5.6/fc-4.1.0/fh-3.2.4/r-2.3.0/rg-1.2.0/sc-2.0.7/sb-1.3.4/sp-2.0.2/sr-1.1.1/datatables.min.css"/>
+     
+</head>
+
+<body>
+      <div class="container">
+
+        <h1 class="mt-5">Bring Your Own Mitre Att&#38;ck (c) Matrix !</h1>
+        <p class="lead">Just check the <code>source</code> of this page</p>
+        <table id="matrix-table" class="table table-striped table-bordered table-hover table-sm table-responsive" style="width:100%"></table>
+        
+        <footer class="pt-5 my-5 text-muted border-top">
+            Created by wagga - 2022
+          </footer>
+      </div>
+
+    <!-- JQuery & DataTables libs -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/sl-1.4.0/cr-1.5.6/fc-4.1.0/fh-3.2.4/r-2.3.0/rg-1.2.0/sc-2.0.7/sb-1.3.4/sp-2.0.2/sr-1.1.1/datatables.min.js"></script>
+    <!-- Custon JS that contains the output of Mitre2Datatables.py -->
+    <script type="text/javascript" src="Mitre2Datatables-Bootstrap.js"></script>
+    <!-- Custon JS that contains the output of Mitre2Datatables.py -->
+    <script type="text/javascript">
+
+        // Tags in cells we want to customize
+        var tags = ["T1589", "T1028", "T1004", "T1013", "T1015", "T1009"];
+
+        $(document).ready(function() {
+
+            // Add your own logic to customize cells
+            for (let i = 0; i < dataJSON.length; i++) { 
+                for (let j = 0; j < dataJSON[i].length; j++) { 
+                    technique = dataJSON[i][j].split("-")[0];
+                    if (tags.includes(technique)){
+                        dataJSON[i][j] = dataJSON[i][j] + '<br><button type="button" class="btn btn-warning">Click in this cell</button>';
+                    }
+                }
+            }
+
+            // initialize the datatables
+            var matrix = $('#matrix-table').DataTable( {
+                paging: false, // Remove paging
+                scrollX: true,
+                ordering: false, // Prevent ordering of the cells 
+                data: dataJSON, // Loaded from Mitre-datatables.js file
+                select: {
+                    style: 'os',
+                    items: 'cell'
+                },
+                columns: [
+                    { title: "Reconnaissance"}, 
+                    { title: "Resource Development"},
+                    { title: "Initial Access"},
+                    { title: "Execution"},
+                    { title: "Persistence"},
+                    { title: "Privilege escalation"},
+                    { title: "Defense Evasion"}, 
+                    { title: "Credential Access"},
+                    { title: "Discovery"},
+                    { title: "Lateral Movement"},
+                    { title: "Collection"},
+                    { title: "Command And Control"}, 
+                    { title: "Exfiltration"},
+                    { title: "Impact"}
+                ]
+            });
+
+            // Add action on the cells
+            $('#matrix-table tbody').on( 'click', 'td', function () {
+                // Get clicked technique
+                var rules = [];
+                var technique = matrix.cell( this ).data().split("-")[0];
+                // We limit to tagged cells only
+                if (tags.includes(technique)){
+                    alert("You've have clicked : " + technique);
+                } 
+           });
+        });
+    </script>
+</body>
+</html>
