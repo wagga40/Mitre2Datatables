@@ -17,5 +17,5 @@ This project is born when working on Zircolite, so this exemple is taken from it
 You can install dependencies with : `pip3 install -r requirements.txt`
 
 - `python3 Mitre2Datatables.py` will generate a JSON file that can be used with Datatables
-- `Mitre2Datatables.html` is a very basic demo on how to use and interact with Mitre2Datatables in you web page
+- Chech the [examples](examples/) to find basic demos on how to use and interact with Mitre2Datatables in you web page
 
