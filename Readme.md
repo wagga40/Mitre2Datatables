@@ -8,7 +8,7 @@ This project only uses technique ID and technique names but it should be possibl
 
 ## Example
 
-This project is born when working on Zircolite, so this exemple is taken from it : 
+This project is born when working on Zircolite, so this example is taken from it : 
 
 ![](pics/gui-matrix.webp)
 
